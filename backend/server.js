@@ -53,12 +53,14 @@ app.use('/api/reviews', require('./routes/reviews'));
 app.use('/api/rounds', require('./routes/rounds'));
 
 // 404 handler
-app.use('*', (req, res) => {
+// Works for both Express 4 and 5
+app.use((req, res) => {
   res.status(404).json({
     success: false,
     message: 'Route not found'
   });
 });
+
 
 // Error handling middleware (must be last)
 app.use(errorHandler);

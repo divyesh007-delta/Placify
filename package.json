@@ -1,12 +1,17 @@
 {
-  "name": "my-v0-project",
-  "version": "0.1.0",
+  "name": "placify",
+  "version": "1.0.0",
   "private": true,
+  "description": "Placify - Complete Placement Management Platform",
   "scripts": {
     "build": "next build",
     "dev": "next dev",
+    "dev:backend": "cd backend && npm run dev",
+    "dev:frontend": "next dev",
     "lint": "next lint",
-    "start": "next start"
+    "start": "next start",
+    "backend:install": "cd backend && npm install",
+    "backend:init": "cd backend && npm run init-db"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.1",

@@ -1,0 +1,457 @@
+{
+	"info": {
+		"_postman_id": "placify-api-collection",
+		"name": "Placify API Collection",
+		"description": "Complete API collection for Placify placement management platform",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "🔐 Authentication",
+			"item": [
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.to.have.status(200)) {",
+									"    const response = pm.response.json();",
+									"    pm.environment.set(\"token\", response.token);",
+									"    pm.environment.set(\"user_id\", response.user.id);",
+									"    console.log(\"Token saved:\", response.token.substring(0, 20) + \"...\");",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"admin@placify.com\",\n    \"password\": \"Admin123!\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/auth/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					}
+				},
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstName\": \"John\",\n    \"lastName\": \"Doe\",\n    \"email\": \"john.doe@example.com\",\n    \"password\": \"Password123!\",\n    \"university\": \"Test University\",\n    \"degree\": \"Computer Science\",\n    \"branch\": \"CSE\",\n    \"graduationYear\": 2024,\n    \"phoneNumber\": \"+1234567890\",\n    \"currentCGPA\": 8.5\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/auth/register",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"register"
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Profile",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/auth/profile",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"profile"
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "🏢 Companies",
+			"item": [
+				{
+					"name": "Get All Companies",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/companies",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"companies"
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Company by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/companies/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"companies",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "company-id-here"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Create Company (Admin)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Test Company\",\n    \"description\": \"A test company for development\",\n    \"industry\": \"Technology\",\n    \"website\": \"https://testcompany.com\",\n    \"headquarters\": \"San Francisco, CA\",\n    \"employeeCount\": \"100-500\",\n    \"type\": \"startup\",\n    \"tier\": \"tier2\",\n    \"tags\": [\"Web Development\", \"Mobile Apps\"]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/companies",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"companies"
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "💼 Jobs",
+			"item": [
+				{
+					"name": "Get All Jobs",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/jobs?page=1&limit=10",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"jobs"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "search",
+									"value": "developer",
+									"disabled": true
+								},
+								{
+									"key": "jobType",
+									"value": "full-time",
+									"disabled": true
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Create Job (Admin)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Full Stack Developer\",\n    \"description\": \"We are looking for a skilled Full Stack Developer to join our team. You will work on both frontend and backend development.\",\n    \"companyId\": \"company-uuid-here\",\n    \"location\": \"San Francisco, CA\",\n    \"jobType\": \"full-time\",\n    \"workMode\": \"hybrid\",\n    \"requirements\": [\"React\", \"Node.js\", \"MongoDB\", \"3+ years experience\"],\n    \"salary\": 120000,\n    \"benefits\": [\"Health Insurance\", \"401k\", \"Flexible Hours\"],\n    \"applicationDeadline\": \"2024-12-31T23:59:59.000Z\",\n    \"isActive\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/jobs",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"jobs"
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "📝 Applications",
+			"item": [
+				{
+					"name": "Get My Applications",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/applications/my-applications",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"applications",
+								"my-applications"
+							]
+						}
+					}
+				},
+				{
+					"name": "Apply for Job",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"jobId\": \"job-uuid-here\",\n    \"coverLetter\": \"I am very interested in this position and believe my skills in React and Node.js make me a great fit.\",\n    \"expectedSalary\": 110000\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/applications",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"applications"
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "⭐ Reviews",
+			"item": [
+				{
+					"name": "Get Company Reviews",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/reviews/company/:companyId",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"reviews",
+								"company",
+								":companyId"
+							],
+							"variable": [
+								{
+									"key": "companyId",
+									"value": "company-uuid-here"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Create Review",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"companyId\": \"company-uuid-here\",\n    \"jobRole\": \"Software Engineer\",\n    \"interviewDate\": \"2024-01-15T10:00:00.000Z\",\n    \"overallRating\": 4.5,\n    \"title\": \"Great interview experience\",\n    \"description\": \"The interview process was well-structured with technical rounds followed by HR discussion. The team was very welcoming and professional.\",\n    \"interviewDifficulty\": \"medium\",\n    \"interviewTypes\": [\"technical\", \"behavioral\"],\n    \"questionsAsked\": [\"Explain React lifecycle\", \"Database optimization\"],\n    \"tips\": \"Prepare well on system design and be ready for live coding\",\n    \"pros\": [\"Good work culture\", \"Learning opportunities\"],\n    \"cons\": [\"Long working hours sometimes\"],\n    \"salaryOffered\": 125000,\n    \"isSelected\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/reviews",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"reviews"
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "👥 Users (Admin)",
+			"item": [
+				{
+					"name": "Get All Users",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/users?page=1&limit=10",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"users"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "❤️ Health Check",
+			"item": [
+				{
+					"name": "Health Check",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/health",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"health"
+							]
+						}
+					}
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:5000"
+		},
+		{
+			"key": "token",
+			"value": ""
+		},
+		{
+			"key": "user_id",
+			"value": ""
+		}
+	]
+}

@@ -88,6 +88,27 @@
 
 ---
 
+## 🔧 Admin Application Management (`/api/applications`)
+
+| Method | Endpoint | Auth Required | Description |
+|--------|----------|---------------|-------------|
+| GET | `/api/applications` | 🔑 Admin | Get all applications (paginated) |
+| GET | `/api/applications/:id` | ✅ User/Admin | Get application by ID |
+| PUT | `/api/applications/:id/status` | 🔑 Admin | Update application status |
+| PUT | `/api/applications/:id` | ✅ User | Update own application |
+| DELETE | `/api/applications/:id` | ✅ User/Admin | Delete application |
+
+---
+
+## 🔄 Profile Management (`/api/auth`)
+
+| Method | Endpoint | Auth Required | Description |
+|--------|----------|---------------|-------------|
+| PUT | `/api/auth/profile` | ✅ User | Update user profile |
+| PUT | `/api/auth/change-password` | ✅ User | Change password |
+
+---
+
 ## ❤️ Health Check
 
 | Method | Endpoint | Auth Required | Description |
@@ -167,6 +188,26 @@ if (pm.response.to.have.status(200)) {
 - **Method**: GET
 - **URL**: `{{base_url}}/api/companies`
 
+#### Create Company (Admin)
+- **Method**: POST
+- **URL**: `{{base_url}}/api/companies`
+- **Headers**: `Authorization: Bearer {{token}}`
+- **Body** (JSON):
+```json
+{
+    "name": "Test Company API",
+    "description": "A test company for API testing",
+    "industry": "Technology",
+    "website": "https://testcompanyapi.com",
+    "headquarters": "Test City",
+    "employeeCount": "201-500",
+    "type": "startup",
+    "tier": "tier2",
+    "isActive": true
+}
+```
+**Note**: Valid employeeCount values: `"1-10"`, `"11-50"`, `"51-200"`, `"201-500"`, `"501-1000"`, `"1000+"`
+
 #### Create Job (Admin)
 - **Method**: POST
 - **URL**: `{{base_url}}/api/jobs`
@@ -185,6 +226,34 @@ if (pm.response.to.have.status(200)) {
     "isActive": true
 }
 ```
+
+#### Create Review (User)
+- **Method**: POST
+- **URL**: `{{base_url}}/api/reviews`
+- **Headers**: `Authorization: Bearer {{token}}`
+- **Body** (JSON):
+```json
+{
+    "companyId": "company-uuid-here",
+    "jobRole": "Software Engineer",
+    "interviewDate": "2025-08-01",
+    "overallRating": 4,
+    "interviewDifficulty": "medium",
+    "interviewExperience": "positive",
+    "title": "Great company for API testing interview experience",
+    "description": "This company provides excellent opportunities for testing APIs and learning new technologies. The interview process was well structured and the team was very professional throughout the process.",
+    "pros": ["Good work culture", "Learning opportunities"],
+    "cons": ["High workload"],
+    "interviewRounds": 3,
+    "wouldRecommend": true,
+    "isAnonymous": false
+}
+```
+**Note**: 
+- Valid interviewDifficulty: `"easy"`, `"medium"`, `"hard"`
+- Valid interviewExperience: `"positive"`, `"neutral"`, `"negative"`
+- Description must be 50-2000 characters
+- Title must be 10-100 characters
 
 ---
 

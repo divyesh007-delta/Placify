@@ -49,6 +49,7 @@ app.use('/api/users', require('./routes/users'));
 app.use('/api/companies', require('./routes/companies'));
 app.use('/api/jobs', require('./routes/jobs'));
 app.use('/api/applications', require('./routes/applications'));
+app.use('/api/placement-experiences', require('./routes/placementExperiences'));
 app.use('/api/reviews', require('./routes/reviews'));
 app.use('/api/rounds', require('./routes/rounds'));
 

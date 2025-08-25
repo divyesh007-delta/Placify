@@ -102,6 +102,72 @@
 							]
 						}
 					}
+				},
+				{
+					"name": "Update Profile",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstName\": \"Updated\",\n    \"lastName\": \"Name\",\n    \"phoneNumber\": \"+1234567890\",\n    \"university\": \"Updated University\",\n    \"degree\": \"Computer Science\",\n    \"branch\": \"CSE\",\n    \"graduationYear\": 2024,\n    \"currentCGPA\": 8.5,\n    \"skills\": [\"JavaScript\", \"React\", \"Node.js\"]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/auth/profile",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"profile"
+							]
+						}
+					}
+				},
+				{
+					"name": "Change Password",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"currentPassword\": \"Admin123!\",\n    \"newPassword\": \"NewPassword123!\",\n    \"confirmPassword\": \"NewPassword123!\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/auth/change-password",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"change-password"
+							]
+						}
+					}
 				}
 			]
 		},
@@ -160,9 +226,9 @@
 								"type": "text"
 							}
 						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"name\": \"Test Company\",\n    \"description\": \"A test company for development\",\n    \"industry\": \"Technology\",\n    \"website\": \"https://testcompany.com\",\n    \"headquarters\": \"San Francisco, CA\",\n    \"employeeCount\": \"100-500\",\n    \"type\": \"startup\",\n    \"tier\": \"tier2\",\n    \"tags\": [\"Web Development\", \"Mobile Apps\"]\n}",
+					"body": {
+						"mode": "raw",
+						"raw": "{\n    \"name\": \"Test Company API\",\n    \"description\": \"A test company for API development\",\n    \"industry\": \"Technology\",\n    \"website\": \"https://testcompanyapi.com\",\n    \"headquarters\": \"San Francisco, CA\",\n    \"employeeCount\": \"201-500\",\n    \"type\": \"startup\",\n    \"tier\": \"tier2\",\n    \"tags\": [\"Web Development\", \"Mobile Apps\"],\n    \"isActive\": true\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -315,6 +381,114 @@
 							]
 						}
 					}
+				},
+				{
+					"name": "Get All Applications (Admin)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/applications?page=1&limit=10",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"applications"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "status",
+									"value": "applied",
+									"disabled": true
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Application by ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/applications/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"applications",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "application-id-here"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Update Application Status (Admin)",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"status\": \"shortlisted\",\n    \"notes\": \"Candidate has good technical skills, moving to next round\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/applications/:id/status",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"applications",
+								":id",
+								"status"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "application-id-here"
+								}
+							]
+						}
+					}
 				}
 			]
 		},
@@ -357,9 +531,9 @@
 								"type": "text"
 							}
 						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"companyId\": \"company-uuid-here\",\n    \"jobRole\": \"Software Engineer\",\n    \"interviewDate\": \"2024-01-15T10:00:00.000Z\",\n    \"overallRating\": 4.5,\n    \"title\": \"Great interview experience\",\n    \"description\": \"The interview process was well-structured with technical rounds followed by HR discussion. The team was very welcoming and professional.\",\n    \"interviewDifficulty\": \"medium\",\n    \"interviewTypes\": [\"technical\", \"behavioral\"],\n    \"questionsAsked\": [\"Explain React lifecycle\", \"Database optimization\"],\n    \"tips\": \"Prepare well on system design and be ready for live coding\",\n    \"pros\": [\"Good work culture\", \"Learning opportunities\"],\n    \"cons\": [\"Long working hours sometimes\"],\n    \"salaryOffered\": 125000,\n    \"isSelected\": true\n}",
+					"body": {
+						"mode": "raw",
+						"raw": "{\n    \"companyId\": \"company-uuid-here\",\n    \"jobRole\": \"Software Engineer\",\n    \"interviewDate\": \"2025-08-01\",\n    \"overallRating\": 4,\n    \"interviewDifficulty\": \"medium\",\n    \"interviewExperience\": \"positive\",\n    \"title\": \"Great company for API testing interview experience\",\n    \"description\": \"This company provides excellent opportunities for testing APIs and learning new technologies. The interview process was well structured and the team was very professional throughout the process.\",\n    \"pros\": [\"Good work culture\", \"Learning opportunities\"],\n    \"cons\": [\"High workload\"],\n    \"interviewRounds\": 3,\n    \"technicalQuestions\": [\"Explain React lifecycle\", \"Database optimization\"],\n    \"hrQuestions\": [\"Tell me about yourself\", \"Why do you want to work here?\"],\n    \"tips\": \"Prepare well on system design and be ready for live coding\",\n    \"salaryOffered\": 125000,\n    \"result\": \"selected\",\n    \"wouldRecommend\": true,\n    \"isAnonymous\": false\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -374,6 +548,163 @@
 							"path": [
 								"api",
 								"reviews"
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "🎯 Interview Rounds",
+			"item": [
+				{
+					"name": "Get All Rounds",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/rounds?page=1&limit=10",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"rounds"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Create Round Record",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"companyId\": \"company-uuid-here\",\n    \"roundType\": \"technical\",\n    \"roundName\": \"Technical Round 1\",\n    \"description\": \"Data structures and algorithms assessment\",\n    \"duration\": 90,\n    \"difficulty\": \"medium\",\n    \"questionsAsked\": [\"Implement binary search\", \"Find cycle in linked list\"],\n    \"topics\": [\"Arrays\", \"Linked Lists\", \"Binary Search\"],\n    \"tips\": \"Review fundamental data structures before the round\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/rounds",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"rounds"
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Round by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/rounds/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"rounds",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "round-id-here"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Update Round",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"roundName\": \"Updated Technical Round 1\",\n    \"description\": \"Updated description with system design questions\",\n    \"duration\": 120,\n    \"difficulty\": \"hard\",\n    \"questionsAsked\": [\"Design a chat system\", \"Implement LRU cache\"],\n    \"topics\": [\"System Design\", \"Caching\", \"Distributed Systems\"],\n    \"tips\": \"Focus on scalability and system architecture\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/rounds/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"rounds",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "round-id-here"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Delete Round",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/rounds/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"rounds",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "round-id-here"
+								}
 							]
 						}
 					}

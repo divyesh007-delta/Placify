@@ -31,14 +31,14 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false
     },
-    jobId: {
+    experienceId: {
       type: DataTypes.UUID,
       references: {
-        model: 'Jobs',
+        model: 'PlacementExperiences',
         key: 'id'
       },
-      onUpdate: 'SET NULL',
-      onDelete: 'SET NULL'
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE'
     },
     applicationDate: {
       type: DataTypes.DATE,
@@ -80,9 +80,9 @@ module.exports = (sequelize) => {
       as: 'user'
     });
 
-    Round.belongsTo(models.Job, {
-      foreignKey: 'jobId',
-      as: 'job'
+    Round.belongsTo(models.PlacementExperience, {
+      foreignKey: 'experienceId',
+      as: 'experience'
     });
     
     Round.hasMany(models.Aptitude, {

@@ -11,6 +11,7 @@ const DSA = require('./DSA');
 const HR = require('./HR');
 const Review = require('./Review');
 const Application = require('./Application');
+const PlacementExperience = require('./PlacementExperience');
 
 // Initialize models
 const models = {
@@ -23,7 +24,8 @@ const models = {
   DSA: DSA(sequelize),
   HR: HR(sequelize),
   Review: Review(sequelize),
-  Application: Application(sequelize)
+  Application: Application(sequelize),
+  PlacementExperience: PlacementExperience(sequelize)
 };
 
 // Set up associations
